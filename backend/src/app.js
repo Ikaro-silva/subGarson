@@ -12,14 +12,16 @@ const app=express()
     app.use(routerIndex)
     //User
     const routerUser= require('./routes/user.routes')
-    app.use('/api/sugGarson',routerUser)
+    app.use('/api/subGarson',routerUser)
 
     //Pratos
     const routerPratos=require('./routes/pratos.routes')
-    app.use('/api/sugGarson',routerPratos)
+    app.use('/api/subGarson',routerPratos)
+
+    //Pedidos
+    const routerPedidos=require('./routes/pedidos.routes')
+    app.use('/api/subGarson',routerPedidos)
     
-
-
 // =>Banco de dados 
     const connectDB =require('./configs/conectDB')
     app.set('conectdb',connectDB)

@@ -73,8 +73,12 @@ exports.consultPratos= async (req,res)=>{
         const querys= await Pratos.find({'tags.0.tag':{$all:query}})
 
         res.send(querys)
+        
     }
     catch(err){
         res.status(400).json({falha:"falha na cosulta",Erro:err})
     }
 }
+
+
+
