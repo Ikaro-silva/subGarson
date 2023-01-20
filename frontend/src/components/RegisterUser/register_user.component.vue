@@ -1,61 +1,138 @@
 <template>
-   <div id="master">
+   <div class="master">
         <div class="container">
             <h1>
                 Cadastro de Usuarios
             </h1>
-            <form>
+            <Form @submit.prevent="submiPrevent">
                 <!-- CAMPO DO NOME  -->
                 <div class="cotainerInput">
                     <label>Nome</label>
-                    <input
+                    <Field
                         type="text"
                         name="nome"
-                        id=""
-                    >
+                        id="nomes"
+                        :rules="validate"
+                        v-model="nome"
+                    />
+                    <ErrorMessage class="msgErr" name="nome"/>
                 </div>
                 <!-- CAMPO DO EMAIL -->
                 <div class="cotainerInput">
                     <label>Email</label>
-                    <input
+                    <Field
                         type="email"
                         name="email"
-                        id=""
-                    >
+                        id="email"
+                        :rules="validateEmail"
+                        v-model="email"
+                    />
+                    <ErrorMessage class="msgErr" name="email"/>
                 </div>
                 <!-- CAMPO DE SENHA -->
                 <div class="cotainerInput">
                     <label>Senha</label>
-                    <input
+                    <Field
                         type="password"
-                        name="email"
-                        id=""
-                    >
+                        name="senha"
+                        id="senha"
+                        :rules="validateSenha"
+                        v-model="senha"
+                    />
+                    <ErrorMessage class="msgErr" name="senha"/>
                 </div>
                 <div class="buton">
-                    <button>Criar</button>
+                    <button @click="createUser">Criar</button>
                 </div>
-            </form>
+            </Form>
         </div>
    </div>
 </template>
 <script>
+    import{Form,Field,validate,ErrorMessage} from "vee-validate"
     export default{
-        name:"register_user"
+        name:"register_user",
+        components:{Form,Field,validate,ErrorMessage},
+        data(){
+            return{
+                
+                nome:null,
+                email:null,
+                senha:null
+                
+            }
+        },
+        methods:{
+            submiPrevent(){},
+
+            createUser(){
+                const data={
+                    nome:this.nome,
+                    email:this.email,
+                    senha:this.senha
+                }
+                console.log(data)
+            },
+
+            validateEmail(value){
+                if (!value) {
+                    return 'Campo obrigatorio';
+                }
+                
+                const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+                if (!regex.test(value)) {
+                    return 'Este tipo de Email é invalido!';
+                }
+                // All is good
+                return true;
+            },
+            
+            validateSenha(value){
+                if(!value){
+                    return 'Campo obrigatorio!'
+                }
+                
+                if(value.includes(' ')){
+                    return "Senha não pode obter espaços"
+                }
+                if(value.length<=8 && value.length>=6){
+                    return true
+                }
+                return 'Senha deve ter entre 6 e 8 caracteres!'
+                
+            },
+            validate(value){
+                if(value){
+                    return true
+                }
+                return "Campo obrigatorio"
+            }
+        }
     }
 </script>
-<style scoped>
- 
-    .container{
-        margin:100PX auto;
-        width: 420px;
-        background-color: rgba(255, 254, 254, 0.132);
-        border-radius: 8px 8px 0 0;
-        height:350px;
+<style >
+    .master{
+        background-color: rgba(0, 0, 0, 0.629);
+        height:100%;
+        padding-top: 100px;
+    }
+    body{
+        background-image: url("../../../public/img/comidas-tipicas-capa2019.jpg");
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-size:cover;
         
+       
+    }
+    .container{
+        margin:auto;
+        width: 420px;
+        background-color: rgba(32, 28, 28, 0.793);
+        border-radius: 8px 8px 0 0;
+        padding-bottom: 20px;
     }
    
-    h1{
+    .master>.container>h1{
         color: white;
         text-align: center;
         margin-top:1px;
@@ -74,6 +151,7 @@
     input{
         width:400px;
         height:30px;
+        margin-bottom: 5px;
         cursor: pointer;
         border: none;
         
@@ -98,5 +176,9 @@
         color: white;
         border-color: white;
         cursor: pointer;
+    }
+    .msgErr{
+        color: red;
+        
     }
 </style>

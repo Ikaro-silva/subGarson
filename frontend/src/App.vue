@@ -11,9 +11,9 @@
    }
 </script>
   
-<style >
+<style>
   body{
-    background-color:#000 ;
+    background-color:rgb(0, 0, 0) ;
     margin: 0;
     padding: 0;
   }

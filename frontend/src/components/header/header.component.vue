@@ -1,6 +1,8 @@
 <template>
     <div id="header">
-        <div id="img"><img src="../../../public/img/comidas-tipicas-capa2019.jpg" alt="prato de comida"></div>
+        <div class="link">
+               
+        </div>
         <div id="nome">
             <h1>Restaurante Coma Bem !</h1>
         </div>
@@ -14,19 +16,19 @@
 </script>
 
 
-<style scoped>
+<style >
     #header{
         display:flex;
         justify-content: space-between;
-        background-image: linear-gradient(to left,#5d2222,#000000);
+        background-image: linear-gradient(to bottom,#5d2222,#3b1616);
         align-items: center;
         height:102px;
         
+        
     }   
-    img{
-        width:200px;
-    }
+
     #nome{
+        
         margin-right: 20px;
         color: white;
         
