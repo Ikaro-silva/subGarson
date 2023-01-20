@@ -20,9 +20,19 @@ const router = createRouter({
       component: () => import('../views/Caixa/lista_pedidos.view.vue')
     },
     {
-      path: '/adm',
+      path: '/admLogin',
       name: 'Administrador',
       component: () => import('../views/Adm/login_user.view.vue')
+    },
+     {
+      path: '/admRegister_User',
+      name: 'Administrador Register User',
+      component: () => import('../views/Adm/register_user.view.vue')
+    },
+    {
+      path: '/admRegister_Pratos',
+      name: 'Administrador Register Pratos',
+      component: () => import('../views/Adm/register_pratos.view.vue')
     }
 
   ]
