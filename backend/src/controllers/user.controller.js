@@ -2,7 +2,7 @@ const User = require('../models/user.model')
 //Metodo reponsavel por criar novos usuarios
 exports.createUser=async(req,res)=>{
     try{
-        const{name,email}=req.body
+        const{nome,email}=req.body
 
         //validação email
         const isEmail=await User.find({email})
@@ -13,13 +13,13 @@ exports.createUser=async(req,res)=>{
         }
 
         // validação nome
-        const isName= await User.find({name})
-
+        const isName= await User.find({nome})
+        
         if(isName.length>=1){
             res.status(401).send('Este Nome ja esta em uso')
             return   
         }
-
+        
         const newUser=new User(req.body)
         const user=await newUser.save()
         const token= await newUser.generateAuthToken()
@@ -35,9 +35,10 @@ exports.createUser=async(req,res)=>{
 exports.loginUser=async (req,res)=>{
 
     try{
-        const{email,password}=req.body
+        const{email,senha}=req.body
+        console.log(req.body)
 
-        const user= await User.fidByCredentals(email,password)
+        const user= await User.fidByCredentals(email,senha)
         if(!user){
             return res.status(409).json({message:'login invalido!'})
         }

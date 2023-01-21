@@ -7,7 +7,7 @@ const schema=mongoose.Schema
 
 //=>[SCHEMA REGISTER]
 const userSchema=new schema({
-    name:{
+    nome:{
         type:String,
         maxlength:50,
         require:true
@@ -17,7 +17,7 @@ const userSchema=new schema({
         maxlength:50,
         require:true
     },
-    password:{
+    senha:{
         type:String,
         require:true
     },
@@ -29,21 +29,21 @@ const userSchema=new schema({
     },{
 
         timestamps:true,
-        collection:'users'
+        collection:'user'
         
     }
     )
 
     userSchema.pre('save',async function(){
         const user=this
-        if(user.isModified('password')){
+        if(user.isModified('senha')){
             const salt= await bcrypt.genSalt(12)
-            user.password= await bcrypt.hash(user.password,salt)
+            user.senha= await bcrypt.hash(user.senha,salt)
         }
     })
     userSchema.methods.generateAuthToken=async function(){
         const user=this
-        const token=jwt.sign({_id:user._id,name:user.name,email:user.email},secret.configToken.secretUser)
+        const token=jwt.sign({_id:user._id,name:user.nome,email:user.email},secret.configToken.secretUser)
         user.tokens=user.tokens.concat({token})
     
         await user.save()
@@ -52,16 +52,16 @@ const userSchema=new schema({
     
     }
     
-    userSchema.statics.fidByCredentals= async (email,password)=>{
+    userSchema.statics.fidByCredentals= async (email,senha)=>{
         
         const user=await User.findOne({email})
+        
     
         if(!user){
             
             return
         }
-        const isPasswordMatch=await bcrypt.compare(password,user.password)
-    
+        const isPasswordMatch=await bcrypt.compare(senha,user.senha)
         if(!isPasswordMatch){
             return 
         }

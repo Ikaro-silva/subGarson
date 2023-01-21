@@ -11,7 +11,7 @@ exports.createPratos=async (req,res)=>{
     try{
         const{nome}=req.body
         const nomePrato= await Pratos.find({nome})
-
+        console.log('q')
         //validação se ja existe um prato com o nome no banco de dados 
         if(nomePrato.length>=1){
             return res.status(400).send('Este nome ja está em uso')

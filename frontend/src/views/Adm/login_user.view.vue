@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <h1>ADM login</h1>
-    </div>
+    <login_userComponent/>
 </template>
 
 <script>
+    import login_userComponent from '../../components/Login/login_user.component.vue';
     export default{
-        name:'Adm Views'
+        name:'Adm Views',
+        components:{login_userComponent}
     }
 </script>

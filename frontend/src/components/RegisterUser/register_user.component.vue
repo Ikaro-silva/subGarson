@@ -1,55 +1,59 @@
 <template>
-   <div class="master">
-        <div class="container">
-            <h1>
-                Cadastro de Usuarios
-            </h1>
-            <Form @submit.prevent="submiPrevent">
-                <!-- CAMPO DO NOME  -->
-                <div class="cotainerInput">
-                    <label>Nome</label>
-                    <Field
-                        type="text"
-                        name="nome"
-                        id="nomes"
-                        :rules="validate"
-                        v-model="nome"
-                    />
-                    <ErrorMessage class="msgErr" name="nome"/>
-                </div>
-                <!-- CAMPO DO EMAIL -->
-                <div class="cotainerInput">
-                    <label>Email</label>
-                    <Field
-                        type="email"
-                        name="email"
-                        id="email"
-                        :rules="validateEmail"
-                        v-model="email"
-                    />
-                    <ErrorMessage class="msgErr" name="email"/>
-                </div>
-                <!-- CAMPO DE SENHA -->
-                <div class="cotainerInput">
-                    <label>Senha</label>
-                    <Field
-                        type="password"
-                        name="senha"
-                        id="senha"
-                        :rules="validateSenha"
-                        v-model="senha"
-                    />
-                    <ErrorMessage class="msgErr" name="senha"/>
-                </div>
-                <div class="buton">
-                    <button @click="createUser">Criar</button>
-                </div>
-            </Form>
+   <div class="img">
+        <div class="master">
+            <div class="container">
+                <h1>
+                    Cadastro de Usuarios
+                </h1>
+                <Form @submit="createUser(e)">
+                    <!-- CAMPO DO NOME  -->
+                    <div class="cotainerInput">
+                        <label>Nome</label>
+                        <Field
+                            type="text"
+                            name="nome"
+                            id="nomes"
+                            :rules="validate"
+                            v-model="nome"
+                        />
+                        <ErrorMessage class="msgErr" name="nome"/>
+                    </div>
+                    <!-- CAMPO DO EMAIL -->
+                    <div class="cotainerInput">
+                        <label>Email</label>
+                        <Field
+                            type="email"
+                            name="email"
+                            id="email"
+                            :rules="validateEmail"
+                            v-model="email"
+                        />
+                        <ErrorMessage class="msgErr" name="email"/>
+                    </div>
+                    <!-- CAMPO DE SENHA -->
+                    <div class="cotainerInput">
+                        <label>Senha</label>
+                        <Field
+                            type="password"
+                            name="senha"
+                            id="senha"
+                            :rules="validateSenha"
+                            v-model="senha"
+                        />
+                        <ErrorMessage class="msgErr" name="senha"/>
+                    </div>
+                    <div class="buton">
+                        <button @click="createUser">Criar</button>
+                    </div>
+                </Form>
+            </div>
         </div>
    </div>
 </template>
 <script>
     import{Form,Field,validate,ErrorMessage} from "vee-validate"
+    import servicesUser from "../../services/servicesUser";
+    import swal from"sweetalert"
     export default{
         name:"register_user",
         components:{Form,Field,validate,ErrorMessage},
@@ -63,15 +67,31 @@
             }
         },
         methods:{
-            submiPrevent(){},
-
-            createUser(){
+          
+            async createUser(e){
+                e.preventDefault();
+                
                 const data={
                     nome:this.nome,
                     email:this.email,
                     senha:this.senha
                 }
-                console.log(data)
+                try{
+                    await servicesUser.createUser(data)
+                    swal({
+                        title: 'Excelente!',
+                        text: 'Usuário(a) cadastrado com sucesso!',
+                        icon: 'success',
+                    })
+                    
+                }catch(error){
+                        swal({
+                        title: 'Erro!',
+                        text: 'Nome ou Email ja cadastrados!!',
+                        icon: 'error',
+                    });
+                }
+                   
             },
 
             validateEmail(value){
@@ -110,19 +130,21 @@
         }
     }
 </script>
-<style >
-    .master{
-        background-color: rgba(0, 0, 0, 0.629);
-        height:100%;
-        padding-top: 100px;
-    }
-    body{
+<style scoped>
+    .img{
+        height: 100%;
         background-image: url("../../../public/img/comidas-tipicas-capa2019.jpg");
         background-position: center top;
         background-repeat: no-repeat;
         background-size:cover;
         
        
+    }
+    .master{
+        background-color: rgba(0, 0, 0, 0.629);
+        height:100%;
+        padding-top:100px;
+        
     }
     .container{
         margin:auto;
@@ -163,7 +185,7 @@
         margin-top:30px;
         text-align: center;
     }
-    button{
+    .buton>button{
         width: 350px;
         height:35px;
         font-size: 1.1em;
@@ -172,7 +194,7 @@
         background-color: #3D0F0F;
         border:groove 4px rgb(152, 149, 149);
     }
-    button:hover{
+    .buton>button:hover{
         color: white;
         border-color: white;
         cursor: pointer;
