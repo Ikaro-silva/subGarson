@@ -3,7 +3,8 @@ const secret=require('../configs/db.config')
 
 function authenticate(req, res, next) {
 
-    const token = req.headers.authorization;
+    const token = req.body.headers['Authorization'];
+    
 
     if (!token) {
       return res.status(401).send('Não autorizado');

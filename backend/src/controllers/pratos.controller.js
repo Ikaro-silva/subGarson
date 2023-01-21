@@ -11,17 +11,17 @@ exports.createPratos=async (req,res)=>{
     try{
         const{nome}=req.body
         const nomePrato= await Pratos.find({nome})
-        console.log('q')
+        
         //validação se ja existe um prato com o nome no banco de dados 
         if(nomePrato.length>=1){
-            return res.status(400).send('Este nome ja está em uso')
+            return res.status(409).send('Este nome ja está em uso')
         }
 
         //salvando o novo prato no banco de dados 
         const newPratos=new Pratos(req.body)
         const prato= await newPratos.save()
         const tags= await newPratos.generateTags(prato)
-        res.status(200).json({messagem:'Prato cadastrado com sucesso',Prato:prato,Tags:tags})
+        res.status(201).json({messagem:'Prato cadastrado com sucesso',Prato:prato,Tags:tags})
     }
     catch(err){
         res.status(400).json({messagem:'Falha ao cadastrar pratos',err:err})

@@ -8,7 +8,7 @@ exports.createUser=async(req,res)=>{
         const isEmail=await User.find({email})
 
         if(isEmail.length>=1){
-            res.status(401).send('Este email ja esta em uso')
+            res.status(409).send('Este email ja esta em uso')
             return
         }
 
@@ -16,7 +16,7 @@ exports.createUser=async(req,res)=>{
         const isName= await User.find({nome})
         
         if(isName.length>=1){
-            res.status(401).send('Este Nome ja esta em uso')
+            res.status(409).send('Este Nome ja esta em uso')
             return   
         }
         
@@ -36,7 +36,7 @@ exports.loginUser=async (req,res)=>{
 
     try{
         const{email,senha}=req.body
-        console.log(req.body)
+        
 
         const user= await User.fidByCredentals(email,senha)
         if(!user){

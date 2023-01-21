@@ -65,7 +65,10 @@
                      senha:this.senha
                  }
                  try{
-                     await servicesUser.loginUser(data)
+
+                     const User=await servicesUser.loginUser(data)
+                     const token=User.user.tokens[0].token
+                     localStorage.setItem('jwt',token)
                      swal({
                          title: 'Excelente!',
                          text: 'Usuário(a) Seja Bem Vindo(a)!',

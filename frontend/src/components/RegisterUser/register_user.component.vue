@@ -83,14 +83,30 @@
                         text: 'Usuário(a) cadastrado com sucesso!',
                         icon: 'success',
                     })
-                    
+                    .then(()=>{
+                        this.nome='',
+                        this.email='',
+                        this.senha=''
+                    })
                 }catch(error){
-                        swal({
-                        title: 'Erro!',
-                        text: 'Nome ou Email ja cadastrados!!',
-                        icon: 'error',
-                    });
-                }
+                        if(error.response.status==401){
+                            swal({
+                                title: 'Erro!',
+                                text: 'Você não é autorizado,faça o login!!',
+                                icon: 'error',
+                            }).then(()=>{
+                                this.$router.push('/admLogin')
+                            })
+                        }
+                        else{
+                            swal({
+                                title: 'Erro!',
+                                text: 'Nome ou Email ja cadastrados!!',
+                                icon: 'error',
+                            });
+                        }
+                        
+                    }
                    
             },
 

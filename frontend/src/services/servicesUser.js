@@ -1,17 +1,18 @@
 import API from "./conectApi"
+import adcionarToken from'../ulteis'
 
 export default{
     //Metodo responsavel por criar usuarios
     async createUser(user){
+        const userToken= await adcionarToken.adcionarToken(user)
+        const response=await API().post('/createUser',userToken)
         
-        const response=await API().post('/createUser',user)
-        
-        const{token}=response.data
+        const{data}=response.data
     },
 
     async loginUser(user){
-        console.log(user)
+        
         const response=await API().post('/loginUser',user)
-        const{token}=response.data
+        return response.data
     }
 }

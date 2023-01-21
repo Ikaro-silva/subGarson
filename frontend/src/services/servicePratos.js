@@ -1,9 +1,11 @@
 import API from "./conectApi"
+import adcionarToken from'../ulteis'
 
 export default{
     async createPratos(pratos){
-        console.log(pratos)
-        const response=await API().post("/createPratos",pratos)
+        const pratosToken= await adcionarToken.adcionarToken(pratos)
+        
+        const response=await API().post("/createPratos",pratosToken)
         const{token}=response.data
     }
 }
