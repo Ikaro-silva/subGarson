@@ -160,6 +160,7 @@
         background-color: rgba(0, 0, 0, 0.629);
         height:100%;
         padding-top:100px;
+        padding-bottom: 100px;
         
     }
     .container{
@@ -167,16 +168,19 @@
         width: 420px;
         background-color: rgba(32, 28, 28, 0.793);
         border-radius: 8px 8px 0 0;
-        padding-bottom: 20px;
+        padding-bottom:20px;
+        
     }
    
     .master>.container>h1{
         color: white;
         text-align: center;
-        margin-top:1px;
         background-color: #3D0F0F;
+        width:420px;
         height:50px;
+        margin-left:-12px;
         border-radius: 8px 8px 0 0;
+        
     }
     label{
         color: white;
@@ -187,7 +191,7 @@
 
     }
     input{
-        width:400px;
+        width:380px;
         height:30px;
         margin-bottom: 5px;
         cursor: pointer;

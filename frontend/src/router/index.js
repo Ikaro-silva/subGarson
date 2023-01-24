@@ -36,8 +36,19 @@ const router = createRouter({
       name: 'Administrador Register Pratos',
       component: () => import('../views/Adm/register_pratos.view.vue'),
       meta:{requireAuth:true}
-
-    }
+    },
+    {
+      path: '/edite_Pratos',
+      name: 'Administrador Edite pratos',
+      component: () => import('../views/Adm/editar_pratos.view.vue'),
+      meta:{requireAuth:true}
+    },
+    {
+      path: '/admLista_Pratos',
+      name: 'lista pratos',
+      component: () => import('../views/Adm/lista_pratos.view.vue'),
+      meta:{requireAuth:true}
+    },
 
   ]
 })

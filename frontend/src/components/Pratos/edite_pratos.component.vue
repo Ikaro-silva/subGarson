@@ -3,36 +3,47 @@
          <div class="master">
              <div class="container">
                  <h1>
-                     Login de usuarios
+                     Cadastro de Pratos
                  </h1>
-                 <Form @submit="createUser(e)">
-                     
+                 <Form @submit="editeUser(e)">
+                     <!-- CAMPO DO NOME  -->
+                     <div class="cotainerInput">
+                         <label>Nome do prato</label>
+                         <Field
+                             type="text"
+                             name="nome"
+                             id="nomes"
+                             :rules="validate"
+                             v-model="prato.nome"
+                         />
+                         <ErrorMessage class="msgErr" name="nome"/>
+                     </div>
                      <!-- CAMPO DO EMAIL -->
                      <div class="cotainerInput">
-                         <label>Email</label>
+                         <label>ingredientes</label>
                          <Field
-                             type="email"
-                             name="email"
-                             id="email"
-                             :rules="validateEmail"
-                             v-model="email"
+                             type="text"
+                             name="ingredientes"
+                             id="ingredientes"
+                             :rules="validate"
+                             v-model="prato.ingredientes"
                          />
                          <ErrorMessage class="msgErr" name="email"/>
                      </div>
                      <!-- CAMPO DE SENHA -->
                      <div class="cotainerInput">
-                         <label>Senha</label>
+                         <label>Preço</label>
                          <Field
-                             type="password"
-                             name="senha"
-                             id="senha"
-                             :rules="validateSenha"
-                             v-model="senha"
+                             type="text"
+                             name="preço"
+                             id="preço"
+                             :rules="validate"
+                             v-model="prato.preço"
                          />
                          <ErrorMessage class="msgErr" name="senha"/>
                      </div>
                      <div class="buton">
-                         <button @click="createUser">Entrar</button>
+                         <button @click="editeUser">Salvar</button>
                      </div>
                  </Form>
              </div>
@@ -41,85 +52,45 @@
  </template>
  <script>
      import{Form,Field,validate,ErrorMessage} from "vee-validate"
-     import servicesUser from "../../services/servicesUser";
+     import servicesPratos from "../../services/servicePratos";
      import swal from"sweetalert"
      export default{
-         name:"register_user",
+         name:"register_prtos",
          components:{Form,Field,validate,ErrorMessage},
          data(){
              return{
+               prato:[]
                  
-                 email:null,
-                 senha:null
                  
              }
          },
          methods:{
-           
-             async createUser(e){
-                 e.preventDefault();
-                 
-                 const data={
-                     
-                     email:this.email,
-                     senha:this.senha
-                 }
-                 try{
+            
+            async getForm(){
+                //PRECISA CRIAR LISTA PARA PASSAR O ID
+                // router.push({name:'Administrador Edite pratos',params:{id:idi}})
+                //COLOCAR ISSO NA FUNÇÂO DO BUTTON DE EDITE
+                const{id}=this.$route.params
+                const response=await servicesPratos.consultId(id)
+                this.prato={...response}
+            },
+            
 
-                     const User=await servicesUser.loginUser(data)
-                     const token=User.user.tokens[0].token
-                     localStorage.setItem('jwt',token)
-                     swal({
-                         title: 'Excelente!',
-                         text: 'Usuário(a) Seja Bem Vindo(a)!',
-                         icon: 'success',
-                     }).then(()=>{
-                         this.$router.push('/admRegister_Pratos');
-                     })
-                 }catch(error){
-                         swal({
-                         title: 'Erro!',
-                         text: 'Senha ou Email inavlidos!!',
-                         icon: 'error',
-                     });
-                 }
-                    
-             },
- 
-             validateEmail(value){
-                 if (!value) {
-                     return 'Campo obrigatorio';
-                 }
-                 
-                 const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-                 if (!regex.test(value)) {
-                     return 'Este tipo de Email é invalido!';
-                 }
-                 // All is good
-                 return true;
-             },
-             
-             validateSenha(value){
-                 if(!value){
-                     return 'Campo obrigatorio!'
-                 }
-                 
-                 if(value.includes(' ')){
-                     return "Senha não pode obter espaços"
-                 }
-                 if(value.length<=8 && value.length>=6){
-                     return true
-                 }
-                 return 'Senha deve ter entre 6 e 8 caracteres!'
-                 
-             },
+            async editeUser(e){
+                 e.preventDefault();
+                //FAZER A FUNÇÂO DE EDITAR
+            },
+
              validate(value){
                  if(value){
                      return true
                  }
                  return "Campo obrigatorio"
              }
-         }
+        },
+        mounted(){
+            this.getForm()
+        }
      }
  </script>
  <style scoped>

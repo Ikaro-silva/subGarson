@@ -129,6 +129,7 @@
          background-color: rgba(0, 0, 0, 0.629);
          height:100%;
          padding-top:100px;
+         padding-bottom: 100px;
          
      }
      .container{
@@ -145,6 +146,8 @@
          margin-top:1px;
          background-color: #3D0F0F;
          height:50px;
+         width:420px;
+         margin-left:-12px;
          border-radius: 8px 8px 0 0;
      }
      label{

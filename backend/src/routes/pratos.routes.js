@@ -18,5 +18,8 @@ router.put('/editPratos/:id',auth,controller.editeByIdPratos)
 //=> rota responsavel por pesquisar por tags (POST):localhost:3000/api/subGarson/consultPratos
 router.post('/consultPratos',controller.consultPratos)
 
+//=>rota resposavel por consultar pratos por id(GET):localhost:3000/api/subGarson/consultPratos:id
+router.get('/consultPratos/:id',auth,controller.consultById)
+
 
 module.exports=router

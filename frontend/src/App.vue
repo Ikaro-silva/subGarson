@@ -18,7 +18,7 @@
     padding: 0;
   }
   #rota{
-    height:100vh;
+    height:auto;
   }
 
 </style>

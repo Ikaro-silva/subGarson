@@ -80,5 +80,17 @@ exports.consultPratos= async (req,res)=>{
     }
 }
 
+exports.consultById=async (req,res)=>{
+    try{
+        const id=req.params.id
+        const prato=await Pratos.findById(id)
+        res.send(prato)
+    }
+    catch(err){
+        res.status(400).json({falha:"falha na cosulta",Erro:err})
+    }
+
+}
+
 
 
