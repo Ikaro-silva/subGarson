@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken')
 const secret=require('../configs/db.config')
 
 function authenticate(req, res, next) {
-
+    
     const token = req.body.headers['Authorization'];
+    
     
 
     if (!token) {

@@ -12,10 +12,17 @@ export default{
 
     //metodo responsavel por buscas pratos por id
     async consultId(id){
-        const IdObjet={}
-        const pratoToken= await adcionarToken.adcionarToken(IdObjet)
-        const response=await API().get(`/consultPratos/:${id}`,pratoToken)
+       
+        const response=await API().get(`/consultPratos/${id}`)
         return response.data
+        
+    },
+
+    //metodo responsavel por editar prato
+    async editPratos(prato){
+        const id=prato._id
+        
+        const response=await API().put(`/editPratos/${id}`,prato)
         
     },
 
@@ -23,6 +30,13 @@ export default{
     async listpratos(){
         const response=await API().get('/listPratos')
         return response.data
+    },
+
+    //metodo responsavel por deletar prato
+    async deletePratos(id){
+    
+        const response=await API().delete(`/deletePratos/${id}`)
+
     }
 
 }

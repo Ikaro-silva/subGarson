@@ -159,7 +159,7 @@
  
      }
      input{
-         width:400px;
+         width:380px;
          height:30px;
          margin-bottom: 5px;
          cursor: pointer;

@@ -5,15 +5,34 @@
             v-for="prato in Pratos" :key="prato._id">
                 <div class="card-header">{{prato.nome}}</div>
                 <div class="card-body">
-                    <h5 class="card-title">Titulo: {{prato.ingredientes}}</h5>
-                    <p class="card-text">Fofoca: {{prato.preço}}</p>
+                    <p class="card-title"><strong>INGREDIENTES:</strong> {{prato.ingredientes}}</p>
+                    <p class="card-text"><strong>VALOR:</strong> {{prato.preço}}</p>
                 
                 </div>
+                <div class="buttonContainer">
+                    <div>
+                        <button 
+                            class="btn btn-secondary" 
+                            style="margin-left: 20px;"
+                            @click="editePrato(prato._id)"
+                            >Editar</button>
+                    </div>
+                    <div>
+                        <button 
+                            class="btn btn-danger" 
+                            style="margin-left:10px;"
+                            @click="deletePratos(prato._id)"
+                            >excluir</button>
+                    </div>
+                </div>
+              
             </div>
         </div>
     </div>
 </template>
 <script>
+    import router from"../../router/index"
+    import swal from "sweetalert"
     import servicePratos from "../../services/servicePratos"
     export default{
         
@@ -24,12 +43,33 @@
             }
         },
         methods:{
-            //FAZER OS BUTÕES DE EDITAR E DELETE , DELETE VAI SER FUNÇÃO,
-            //JA EDITE VAI PASSAR A INFORMAÇÃO ID "OLHAR NO EDITE COMPOENENT"
-            //E VAI MANDAR PARA  ROTA RESPONSAVEL
+            
             async listPratos(){
                 const response=await servicePratos.listpratos()
                 this.Pratos=response
+            },
+
+            async deletePratos(id){
+                swal({
+                    title: 'Voce quer deletar esse Prato ?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                    
+                    }).then(async (result) => {
+                            if (result) {
+                                await servicePratos.deletePratos(id);
+                                swal('Deletado', 'Prato Excluido', 'success');
+                                this.listPratos();
+                            } else {
+                                swal('Cancelado', 'Prato Não Excluido', 'info');
+                            }
+                        });
+            },
+
+            editePrato(idi){
+                // RESOLVER ID NÂO ESTA INDO PARA URL
+                this.$router.push(`/admEdite_Pratos/${idi}`)
             }
         },
         mounted(){
@@ -49,8 +89,15 @@
         display:inline-block;
         max-width: 18rem;
         min-width:18rem;
-        min-height:15rem ; 
+        
         padding: 10px;
         margin: 50px 10px;
+    }
+    p{
+        text-align: justify;
+    }
+    .buttonContainer{
+        display: flex;
+        
     }
 </style>

@@ -64,21 +64,38 @@
                  
              }
          },
+         mounted(){
+            this.getForm()
+        },
          methods:{
             
             async getForm(){
-                //PRECISA CRIAR LISTA PARA PASSAR O ID
-                // router.push({name:'Administrador Edite pratos',params:{id:idi}})
-                //COLOCAR ISSO NA FUNÇÂO DO BUTTON DE EDITE
-                const{id}=this.$route.params
+                const id=this.$route.params.id
                 const response=await servicesPratos.consultId(id)
                 this.prato={...response}
             },
             
 
             async editeUser(e){
-                 e.preventDefault();
-                //FAZER A FUNÇÂO DE EDITAR
+                e.preventDefault();
+                
+                try{
+                    
+                    await servicesPratos.editPratos(this.prato)
+                    swal({
+                         title: 'Excelente!',
+                         text: 'Excelente, prato editado!',
+                         icon: 'success',
+                     }).then(()=>{
+                         this.$router.push('/admLista_Pratos');
+                     })
+                }catch(err){
+                    swal({
+                         title: 'Erro!',
+                         text: 'Verifique os campos!!!!',
+                         icon: 'error',
+                     });
+                }
             },
 
              validate(value){
@@ -88,9 +105,7 @@
                  return "Campo obrigatorio"
              }
         },
-        mounted(){
-            this.getForm()
-        }
+      
      }
  </script>
  <style scoped>

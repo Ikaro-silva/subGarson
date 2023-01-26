@@ -43,7 +43,8 @@ exports.allPratos=async(req,res)=>{
 //metodo responsavel por excluir pratos por ID
 exports.deleteByIdPratos=async(req,res)=>{
     try{
-        await Pratos.findByIdAndDelete(req.body.id)
+        
+        await Pratos.findByIdAndDelete(req.params.id)
         res.status(200).send('Prato deletado')
     }
     catch(err){
@@ -54,10 +55,12 @@ exports.deleteByIdPratos=async(req,res)=>{
 //metodo responsavel por editar pratos por ID
 exports.editeByIdPratos= async(req,res)=>{
     try{
+        
         const id= req.params.id
+        
         const editePrato= await Pratos.findByIdAndUpdate(id,req.body)
         await editePrato.save()
-        res.send(editePrato)
+        res.send("editePrato")
     }
     catch(err){
         res.status(400).send(err)

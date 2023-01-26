@@ -1,4 +1,5 @@
 <template>
+    
     <lista_pratosComponent/>
 </template>
 <script>

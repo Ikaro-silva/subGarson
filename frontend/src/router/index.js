@@ -38,7 +38,7 @@ const router = createRouter({
       meta:{requireAuth:true}
     },
     {
-      path: '/edite_Pratos',
+      path: '/admEdite_Pratos/:id',
       name: 'Administrador Edite pratos',
       component: () => import('../views/Adm/editar_pratos.view.vue'),
       meta:{requireAuth:true}
