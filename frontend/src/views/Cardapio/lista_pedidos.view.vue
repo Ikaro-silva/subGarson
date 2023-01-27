@@ -1,9 +1,11 @@
 <template>
-    <div>Lista de pedidos </div>
+    <listaComponent/>
 </template>
 
 <script>
+    import listaComponent from '../../components/cardapio/lista.component.vue';
     export default{
-        name:'Cardapio Views'
+        name:'Cardapio Views',
+        components:{listaComponent}
     }
 </script>

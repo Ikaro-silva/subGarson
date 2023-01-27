@@ -31,7 +31,7 @@
     </div>
 </template>
 <script>
-    import router from"../../router/index"
+    
     import swal from "sweetalert"
     import servicePratos from "../../services/servicePratos"
     export default{
