@@ -7,7 +7,6 @@
                 <div class="card-body">
                     <p class="card-title"><strong>INGREDIENTES:</strong> {{prato.ingredientes}}</p>
                     <p class="card-text"><strong>VALOR:</strong> {{prato.preço}}</p>
-                
                 </div>
                 <div class="buttonContainer">
                     <div>
@@ -77,25 +76,27 @@
         }
     }
 </script>
-<style>
-        #container{
+<style scoped>
+    #container{
         margin-top: 50px;
         text-align: center;
         justify-content: center;
         margin-right:5px;
     }
+
     #card{
         
         display:inline-block;
         max-width: 18rem;
         min-width:18rem;
-        
         padding: 10px;
         margin: 50px 10px;
     }
+
     p{
         text-align: justify;
     }
+
     .buttonContainer{
         display: flex;
         
