@@ -1,33 +1,37 @@
 <template>
     <div class="img">
         <div class="master">
+            <div >
+                <div class="divloja">
+                    <font-awesome-icon icon="fa-solid fa-shop" class="loja" />
+                </div>
+                <div class="divscan">
+                    <font-awesome-icon icon="fa-solid fa-qrcode" class="scan"/>
+                </div>
+
+            </div>
             <div class="container_cardapio"
             v-for="prato in Pratos" :key="prato._id">
-                <div class="prato">
-                    <h5>{{prato.nome}}</h5>
-                    <h6>{{prato.ingredientes}}</h6>
-                    <h6>R${{prato.preço}}</h6>
-                </div>
-                <div class="btn">
-                        <button>
-                            Carrinho
-                        </button>
+                
+                    <div class="prato">
+                        <h5>{{prato.nome}}</h5>
+                        <h6>{{prato.ingredientes}}</h6>
+                        <h6>R${{prato.preço}}</h6>
                     </div>
+                    <div class="btn">
+                             <button @click="adcionarPedidos(prato._id)"> <!--COLOCAR NO LOCALSTORANGE -->
+                                <font-awesome-icon icon="fa-solid fa-cart-plus" class="carrinho" />
+                            </button>
+                    </div>
+                
             </div>
-            <div >
-                <div class="carrinho">
-
-                </div>
-                <div class="scan">
-
-                </div>
-
-            </div>
+           
         </div>
     </div>
 </template>
 <script>
     import servicesCardapio from '../../services/servicesCardapio'
+    import servicePratos from '../../services/servicePratos'
     export default{
         name:'lista.component',
         data(){
@@ -39,6 +43,11 @@
             async getList(){
                 const response=await servicesCardapio.listpratos()
                 this.Pratos=response
+            },
+            async adcionarPedidos(id){
+                const pedido=await servicePratos.consultId(id)
+                localStorage.setItem('pedidos',pedido)//Transformar o objeto em json
+
             }
         },
         mounted(){
@@ -60,6 +69,8 @@
     .master{
         background-color: rgba(0, 0, 0, 0.629);
         height:100%;
+        
+        
           
         
     }
@@ -69,7 +80,7 @@
         width:60%;
         background-color:#260e0e;
         padding: 20px;
-        display: flex;
+        display:flex;
         align-items: center;   
     }
   
@@ -94,6 +105,63 @@
     button:hover{
         background-color:rgb(74, 74, 74);
         font-size: 1.2em;
+    }
+    .carrinho{
+        width: 50px;
+        height:30px;
+    }
+    .divloja{
+        background-color: rgb(255, 255, 255);
+        width: 70px;
+        height: 70px;
+        text-align: center;
+        display: inline;
+        margin-left:80%;
+        margin-top:5%;
+        position:fixed;
+        border-radius: 50%;
+        cursor:pointer;
+    }
+    .divloja:hover{
+        width:72px;
+        height: 72px;
+        border: 2px solid rgb(0, 0, 0);
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.228);
+        
+    }
+    .loja{
+        width: 50px;
+        height: 50px;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+        position: absolute;
+    }
+    .divscan{
+        background-color: rgb(255, 255, 255);
+        width: 70px;
+        height: 70px;
+        text-align: center;
+        display: inline;
+        margin-left:80%;
+        margin-top:13%;
+        position:fixed;
+        border-radius: 50%;
+        cursor:pointer;
+    }
+    .divscan:hover{
+        width:72px;
+        height: 72px;
+        border: 2px solid rgb(0, 0, 0);
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.228);
+    }
+    .scan{
+        width: 50px;
+        height: 50px;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+        position: absolute;
     }
     h5{
         padding-bottom: 5px;
