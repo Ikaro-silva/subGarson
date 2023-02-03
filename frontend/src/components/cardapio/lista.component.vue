@@ -2,12 +2,23 @@
     <div class="img">
         <div class="master">
             <div >
-                <div class="divloja">
+                <div class="divloja" @click="getListPedidos">
                     <font-awesome-icon icon="fa-solid fa-shop" class="loja" />
                 </div>
                 <div class="divscan">
                     <font-awesome-icon icon="fa-solid fa-qrcode" class="scan"/>
                 </div>
+                 <lista_pedidosPre class="pre_pedidos"/>
+                <!-- <div class="container_pedido"
+                v-for="pedido in Pedidos" :key="pedido._id">
+                    
+                    <div class="pedido">
+                        <h5>{{pedido.nome}}</h5>
+                        <h6>{{pedido.ingredientes}}</h6>
+                        <h6>R${{pedido.preço}}</h6>
+                    </div>
+                    
+                </div>    -->
 
             </div>
             <div class="container_cardapio"
@@ -19,8 +30,8 @@
                         <h6>R${{prato.preço}}</h6>
                     </div>
                     <div class="btn">
-                             <button @click="adcionarPedidos(prato._id)"> <!--COLOCAR NO LOCALSTORANGE -->
-                                <font-awesome-icon icon="fa-solid fa-cart-plus" class="carrinho" />
+                             <button @click="adcionarPedidos(prato._id)" > 
+                                <font-awesome-icon icon="fa-solid fa-cart-plus" class="carrinho" alt="loja"/>
                             </button>
                     </div>
                 
@@ -32,23 +43,39 @@
 <script>
     import servicesCardapio from '../../services/servicesCardapio'
     import servicePratos from '../../services/servicePratos'
+    import lista_pedidosPre from './lista_pedidos _clientes.component.vue'
     export default{
         name:'lista.component',
+        components:{lista_pedidosPre},
         data(){
             return{
-                Pratos:[]
+                Pratos:[],
+                // Pedidos:[],
+                parsePedidos:[]
             }
         },
         methods:{
+            // Mostrar lista de pratos
             async getList(){
                 const response=await servicesCardapio.listpratos()
                 this.Pratos=response
+                
             },
+            //Adcionando  na lista de pre pedidos 
             async adcionarPedidos(id){
-                const pedido=await servicePratos.consultId(id)
-                localStorage.setItem('pedidos',pedido)//Transformar o objeto em json
+                const response=await servicePratos.consultId(id)
+                this.parsePedidos.push(response)
+                const pedidoCarrinho=this.parsePedidos
+                localStorage.setItem('pedidos',JSON.stringify(pedidoCarrinho))
 
             }
+            ,//Mostrar lista de pré pedidos 
+            // getListPedidos(){
+            //     const pedidos=localStorage.getItem('pedidos')
+            //     const pedido=JSON.parse(pedidos)
+            //     this.Pedidos=pedido
+                
+            // }
         },
         mounted(){
             this.getList()
@@ -167,5 +194,9 @@
         padding-bottom: 5px;
        border-bottom: 1px solid rgba(0, 0, 0, 0.194); 
     }
-
+    .container_pedido{
+        
+        background-color: aliceblue;
+    }
+  
 </style>
