@@ -1,24 +1,44 @@
 <template>
       <div class="containerGeral">
-          <div class="container_pedido"
-                    v-for="pedido in Pedidos" :key="pedido._id" >
-          
-                        <div class="pedido">
-                            <h5>{{pedido.nome}}</h5>
-                            <h6>{{pedido.ingredientes}}</h6>
-                            <h6>R${{pedido.preço}}</h6>
-                        </div>
-          
+        <div class="divBtnfechar">
+            <button @click="mostrarCardapio">
+                 <font-awesome-icon icon="fa-solid fa-xmark" class="btnFechar"/>
+            </button>
+        </div>
+            <div class="container_pedido"
+            v-for="pedido in Pedidos" :key="pedido._id" >
+        
+                <div class="pedido">
+                    <h6>PRATO: {{pedido.nome}}</h6>
+                    <h6>INGREDIENTES: {{pedido.ingredientes}}</h6>
+                    <h6>VALOR :R$ {{pedido.preço}}</h6>
+                </div>
+
+                <div class="containerBtn+-">
+                    <button @click="aumentarQuantPedidos(pedido._id)">
+                        <font-awesome-icon icon="fa-solid fa-plus" class="btn+" />
+                    </button>
+                
+                    <h5>{{pedido.quantidade}}</h5>
+
+                    <button @click="diminuirQuantPedidos(pedido._id)">
+                        <font-awesome-icon icon="fa-solid fa-minus" class="btn-" />
+                    </button>
+                </div>
+                    
             </div>
+            
       </div>           
 
 </template>
 <script>
+import  mudarQuantPedidos from '../../ulteis'
     export default{
         name:"lista_pedidos",
         data() {
             return {
-                Pedidos:[]
+                Pedidos:[],
+                
             }
         },
         methods:{
@@ -30,6 +50,18 @@
                     this.Pedidos=pedido
                 }, 300);
                
+            },
+            
+           async aumentarQuantPedidos(id){
+            const quant=1
+            const array =await mudarQuantPedidos.mudarQuantPedidos(id,quant)
+            console.log(array)
+            localStorage.setItem("pedidos",JSON.stringify(array))
+
+           },
+
+            mostrarCardapio(){
+                this.$router.push('/')
             }
         },
         mounted() {
@@ -40,16 +72,26 @@
 <style scoped>
 .containerGeral{
     background-color: #212529;
-    width: 30%;
-    margin-left:68%;
-    margin-top:3%;
-   
-    position:fixed;
-}
+    
+}   
  .container_pedido{
-    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     color: white;
+    border-bottom:1px solid rgba(211, 211, 211, 0.523);
     
- }
+}
+.divBtnfechar{
+    margin-left:93%;
+}
+.pedido{
+    padding: 20px 0px;
+    
+}
+h5{
+    display: inline;
+    padding: 0 10px;
+}
 
 </style>

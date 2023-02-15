@@ -49,6 +49,12 @@ const router = createRouter({
       component: () => import('../views/Adm/lista_pratos.view.vue'),
       meta:{requireAuth:true}
     },
+    {
+      path: '/pedidos_Clientes',
+      name: 'pedidos clientes',
+      component: () => import('../views/Cardapio/carrinho.view.vue'),
+      
+    },
 
   ]
 })

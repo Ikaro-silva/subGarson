@@ -2,28 +2,18 @@
     <div class="img">
         <div class="master">
             <div >
-                <div class="divloja" @click="getListPedidos">
+                <div class="divloja" @click="motrarPedidos">
                     <font-awesome-icon icon="fa-solid fa-shop" class="loja" />
                 </div>
                 <div class="divscan">
                     <font-awesome-icon icon="fa-solid fa-qrcode" class="scan"/>
                 </div>
-                 <lista_pedidosPre class="pre_pedidos"/>
-                <!-- <div class="container_pedido"
-                v-for="pedido in Pedidos" :key="pedido._id">
-                    
-                    <div class="pedido">
-                        <h5>{{pedido.nome}}</h5>
-                        <h6>{{pedido.ingredientes}}</h6>
-                        <h6>R${{pedido.preço}}</h6>
-                    </div>
-                    
-                </div>    -->
+                 
+                
 
             </div>
             <div class="container_cardapio"
             v-for="prato in Pratos" :key="prato._id">
-                
                     <div class="prato">
                         <h5>{{prato.nome}}</h5>
                         <h6>{{prato.ingredientes}}</h6>
@@ -43,15 +33,15 @@
 <script>
     import servicesCardapio from '../../services/servicesCardapio'
     import servicePratos from '../../services/servicePratos'
-    import lista_pedidosPre from './lista_pedidos _clientes.component.vue'
+    import adicionarCampos from '../../ulteis'
     export default{
         name:'lista.component',
-        components:{lista_pedidosPre},
+        
         data(){
             return{
                 Pratos:[],
-                // Pedidos:[],
-                parsePedidos:[]
+                parsePedidos:[],
+                
             }
         },
         methods:{
@@ -65,17 +55,16 @@
             async adcionarPedidos(id){
                 const response=await servicePratos.consultId(id)
                 this.parsePedidos.push(response)
-                const pedidoCarrinho=this.parsePedidos
-                localStorage.setItem('pedidos',JSON.stringify(pedidoCarrinho))
-
-            }
-            ,//Mostrar lista de pré pedidos 
-            // getListPedidos(){
-            //     const pedidos=localStorage.getItem('pedidos')
-            //     const pedido=JSON.parse(pedidos)
-            //     this.Pedidos=pedido
                 
-            // }
+                const arrayFinal=await adicionarCampos.adcionarCampo(this.parsePedidos)
+              
+                await localStorage.setItem('pedidos',JSON.stringify(arrayFinal))
+                //fazer um jeito para que ele não venha atualizar 
+            },
+            motrarPedidos(){
+                this.$router.push('/pedidos_Clientes')
+            }
+            
         },
         mounted(){
             this.getList()
@@ -108,7 +97,8 @@
         background-color:#260e0e;
         padding: 20px;
         display:flex;
-        align-items: center;   
+        align-items: center;
+         
     }
   
     .prato{
@@ -116,6 +106,7 @@
         width:70%;
         color:black;
         background-color: white;
+       
     }
     .btn{
         margin:auto;
@@ -194,9 +185,6 @@
         padding-bottom: 5px;
        border-bottom: 1px solid rgba(0, 0, 0, 0.194); 
     }
-    .container_pedido{
-        
-        background-color: aliceblue;
-    }
+ 
   
 </style>
