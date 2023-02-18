@@ -25,6 +25,11 @@
                         <font-awesome-icon icon="fa-solid fa-minus" class="btn-" />
                     </button>
                 </div>
+                <div>
+                    <button @click="deletarPedido(pedido._id)">
+                        <font-awesome-icon icon="fa-solid fa-trash-can" />
+                    </button>
+                </div>
                     
             </div>
             
@@ -32,7 +37,7 @@
 
 </template>
 <script>
-import  mudarQuantPedidos from '../../ulteis'
+import  uteis from '../../ulteis'
     export default{
         name:"lista_pedidos",
         data() {
@@ -54,12 +59,23 @@ import  mudarQuantPedidos from '../../ulteis'
             
            async aumentarQuantPedidos(id){
             const quant=1
-            const array =await mudarQuantPedidos.mudarQuantPedidos(id,quant)
-            console.log(array)
+            const array =await uteis.mudarQuantPedidos(id,quant)
+            
+            localStorage.setItem("pedidos",JSON.stringify(array))
+
+           },
+           async diminuirQuantPedidos(id){
+            const quant=-1
+            const array =await uteis.mudarQuantPedidos(id,quant)
+            
             localStorage.setItem("pedidos",JSON.stringify(array))
 
            },
 
+           deletarPedido(id){
+            const array= uteis.deletarPedido(id)
+            localStorage.setItem("pedidos",JSON.stringify(array))
+           },
             mostrarCardapio(){
                 this.$router.push('/')
             }

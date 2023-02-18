@@ -33,7 +33,7 @@
 <script>
     import servicesCardapio from '../../services/servicesCardapio'
     import servicePratos from '../../services/servicePratos'
-    import adicionarCampos from '../../ulteis'
+    import uteis from '../../ulteis'
     export default{
         name:'lista.component',
         
@@ -41,6 +41,7 @@
             return{
                 Pratos:[],
                 parsePedidos:[],
+                
                 
             }
         },
@@ -56,10 +57,30 @@
                 const response=await servicePratos.consultId(id)
                 this.parsePedidos.push(response)
                 
-                const arrayFinal=await adicionarCampos.adcionarCampo(this.parsePedidos)
-              
-                await localStorage.setItem('pedidos',JSON.stringify(arrayFinal))
-                //fazer um jeito para que ele não venha atualizar 
+                const arrayFinal=await uteis.adcionarCampo(this.parsePedidos)
+                        if(localStorage.getItem("pedidos")==null){
+                            
+                            localStorage.setItem('pedidos',JSON.stringify(arrayFinal))
+                        }
+                        else{
+                            let arrayDePedidos1= localStorage.getItem("pedidos")
+                            let arrayDePedidos2=JSON.parse(arrayDePedidos1)
+                            const pedidoLocalStorage=uteis.verificandoPedido(arrayDePedidos2,response._id)
+
+                            if(pedidoLocalStorage==false){
+                                return false
+                            }
+                            else{
+                                
+                                let pedidoLister=[]
+                                pedidoLister=localStorage.getItem('pedidos')
+                                const pedidosLista=JSON.parse(pedidoLister)
+                                
+                                pedidosLista.push(response)
+                                localStorage.setItem("pedidos",JSON.stringify(pedidosLista))
+                            }           
+                        }
+                        
             },
             motrarPedidos(){
                 this.$router.push('/pedidos_Clientes')
