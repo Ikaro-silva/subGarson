@@ -76,6 +76,7 @@
                      ingredientes:this.ingredientes,
                      preço:this.preço
                  }
+                 
                  try{
                      await servicesPratos.createPratos(data)
                      swal({

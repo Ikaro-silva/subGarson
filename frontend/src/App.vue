@@ -4,8 +4,8 @@
   <footerComponentVue/>
 </template>
 <script >
-   import footerComponentVue from './components/footer/footer.component.vue'; 
-   import headerComponent from './components/header/header.component.vue';
+   import footerComponentVue from './components/foote/foote.component.vue'; 
+   import headerComponent from './components/heade/heade.component.vue';
    export default{
     components:{headerComponent,footerComponentVue}
    }

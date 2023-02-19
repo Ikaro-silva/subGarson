@@ -4,8 +4,11 @@ const middleware =require('../middlewares/createTags.middlewares')
 //Metodo responsavel por criar pedidos
 exports.createPedidos=async(req,res)=>{
     try{
+        
         const NewPedidos= new Pedidos(req.body)
+        
         const pedidos = await NewPedidos.save()
+        
         res.status(200).json({message:"pedidos salvo com sucesso !",pedidos})
     }
     catch(err){

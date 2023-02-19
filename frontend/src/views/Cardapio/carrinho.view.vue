@@ -1,12 +1,14 @@
 <template>
-    <lista_pedidos_clientesComponentVue/>
+    <div>
+        <lista_pedidosComponentVue/>
+    </div>
 </template>
 <script>
-    import lista_pedidos_clientesComponentVue from '../../components/cardapio/lista_pedidos _clientes.component.vue';
+    import lista_pedidosComponentVue from '../../components/cardapio/lista_pedidos.component.vue';
     export default{
         name:"carrinho",
         components:{
-            lista_pedidos_clientesComponentVue
+            lista_pedidosComponentVue
         }
     }
 </script>

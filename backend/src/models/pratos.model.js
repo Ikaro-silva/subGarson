@@ -32,6 +32,7 @@ pratosSchema.methods.generateTags=async function(Prato){
 }
 
 
+
 const Pratos=mongoose.model('pratos', pratosSchema)
 
 module.exports=Pratos

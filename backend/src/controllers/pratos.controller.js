@@ -16,11 +16,12 @@ exports.createPratos=async (req,res)=>{
         if(nomePrato.length>=1){
             return res.status(409).send('Este nome ja está em uso')
         }
-
+        
         //salvando o novo prato no banco de dados 
         const newPratos=new Pratos(req.body)
         const prato= await newPratos.save()
         const tags= await newPratos.generateTags(prato)
+        
         res.status(201).json({messagem:'Prato cadastrado com sucesso',Prato:prato,Tags:tags})
     }
     catch(err){
