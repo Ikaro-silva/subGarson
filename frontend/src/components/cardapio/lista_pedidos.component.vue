@@ -42,8 +42,10 @@
 
 </template>
 <script>
+import swal from "sweetalert"
 import  uteis from '../../ulteis'
 import servicePedidos from '../../services/servicePedidos';
+
   export default{
       name:"lista",
       data() {
@@ -87,13 +89,28 @@ import servicePedidos from '../../services/servicePedidos';
          
          async divFazerPedido(){
           try{
-              var todosPedidos=localStorage.getItem('pedidos')
-              todosPedidos=JSON.parse(todosPedidos)
-              
-              await servicePedidos.createPedidos(todosPedidos)
+            var todosPedidos=localStorage.getItem('pedidos')
+            todosPedidos=JSON.parse(todosPedidos)
+            const pedido={
+                pedidos:todosPedidos
+            }
+            await servicePedidos.createPedidos(pedido)
+            swal({
+                
+                text: 'Pedido Enviado com sucesso!',
+                icon: 'success',
+                buttons: false,
+                timer:2000,
+            }).then(()=>{
+                this.$router.push('/')
+            });
           }
           catch(err){
-              console.log()
+            swal("Tente novamente!", {
+                className: "red-bg",
+                buttons: false,
+                timer:2000,
+            })
           }
           
           
